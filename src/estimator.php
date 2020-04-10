@@ -30,8 +30,8 @@ function calculateImpact($data, $reportedCasesMultiplier)
     $casesForVentilatorsByRequestedTime = intval($infectionsByRequestedTime * 0.02);
     
     $dollarsInFlight = (
-      $infectionsByRequestedTime * $data['region']['avgDailyIncomePopulation']
-      ) * $data['region']['avgDailyIncomeInUSD'] * $numberOfDays;
+      $infectionsByRequestedTime * $data['region']['avgDailyIncomePopulation'] * $data['region']['avgDailyIncomeInUSD']
+      ) / $numberOfDays;
 
     return [
       'currentlyInfected' => $currentlyInfected,
