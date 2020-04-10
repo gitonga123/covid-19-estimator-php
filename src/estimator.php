@@ -22,7 +22,7 @@ function convertArrayToJson($data)
 
 function calculateImpact($data)
 {
-  $currentlyInfected = $data['reportedCases'] * 10;
+  $currentlyInfected = $data['data']['reportedCases'] * 10;
   $factor = pow(2, intval(convertPeriodTypeToNumberOfDays($data) / 3));
   $infectionsByRequestedTime = $currentlyInfected * $factor;
 
@@ -31,7 +31,7 @@ function calculateImpact($data)
 
 function calculateSevereImpact($data)
 {
-  $currentlyInfected = $data['reportedCases'] * 50;
+  $currentlyInfected = $data['data']['reportedCases'] * 50;
   $factor = pow(2, intval(convertPeriodTypeToNumberOfDays($data) / 3));
   $infectionsByRequestedTime = $currentlyInfected * $factor;
 
@@ -40,8 +40,8 @@ function calculateSevereImpact($data)
 
 function convertPeriodTypeToNumberOfDays($data)
 {
-  $periodType = $data['periodType'];
-  $timeToElapse = $data['timeToElapse'];
+  $periodType = $data['data']['periodType'];
+  $timeToElapse = $data['data']['timeToElapse'];
   $number_of_days = '';
   switch ($periodType) {
     case 'weeks':
