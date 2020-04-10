@@ -3,12 +3,12 @@
 
 function covid19ImpactEstimator($data)
 {
-  $formatted_data = json_decode($data, true);
+
 
   $new_data = json_encode([
-    "data" => $formatted_data['data'],
-    'impact' => calculateImpact($formatted_data),
-    'severeImpact' => calculateSevereImpact($formatted_data)
+    "data" => $data,
+    'impact' => calculateImpact($data),
+    'severeImpact' => calculateSevereImpact($data)
   ]);
   return $new_data;
 }
