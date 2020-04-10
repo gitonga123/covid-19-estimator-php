@@ -5,11 +5,9 @@ function covid19ImpactEstimator($data)
   $formatted_data = convertJsonToArray($data);
 
   $new_data = convertArrayToJson([
-    "data" => $formatted_data['data'],
-    "estimates" => [
-      'impact' => calculateImpact($formatted_data),
-      'severeImpact' => calculateSevereImpact($formatted_data)
-    ]
+    "data" => $formatted_data,
+    'impact' => calculateImpact($formatted_data),
+    'severeImpact' => calculateSevereImpact($formatted_data)
   ]);
   return $new_data;
 }
@@ -26,7 +24,7 @@ function convertArrayToJson($data)
 
 function calculateImpact($data)
 {
-  $currentlyInfected = $data['data']['reportedCases'] * 10;
+  $currentlyInfected = $data['reportedCases'] * 10;
   $factor = pow(2, intval(convertPeriodTypeToNumberOfDays($data) / 3));
   $infectionsByRequestedTime = $currentlyInfected * $factor;
 
@@ -35,7 +33,7 @@ function calculateImpact($data)
 
 function calculateSevereImpact($data)
 {
-  $currentlyInfected = $data['data']['reportedCases'] * 50;
+  $currentlyInfected = $data['reportedCases'] * 50;
   $factor = pow(2, intval(convertPeriodTypeToNumberOfDays($data) / 3));
   $infectionsByRequestedTime = $currentlyInfected * $factor;
 
@@ -44,8 +42,8 @@ function calculateSevereImpact($data)
 
 function convertPeriodTypeToNumberOfDays($data)
 {
-  $periodType = $data['data']['periodType'];
-  $timeToElapse = $data['data']['timeToElapse'];
+  $periodType = $data['periodType'];
+  $timeToElapse = $data['timeToElapse'];
   $number_of_days = '';
   switch ($periodType) {
     case 'weeks':
