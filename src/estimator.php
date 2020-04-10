@@ -25,8 +25,8 @@ function calculateImpact($data, $reportedCasesMultiplier)
     $factor = pow(2, intval($numberOfDays / 3));
     $infectionsByRequestedTime = $currentlyInfected * $factor;
     $severeCasesByRequestedTime = $infectionsByRequestedTime * 0.15;
-    $hospitalBedsByRequestedTime = (intval($data['totalHospitalBeds'] * 0.35)) - $severeCasesByRequestedTime;
-    $casesForICUByRequestedTime = intval($infectionsByRequestedTime * 0.05);
+    $hospitalBedsByRequestedTime = (($data['totalHospitalBeds'] * 0.35)) - $severeCasesByRequestedTime;
+    $casesForICUByRequestedTime = ($infectionsByRequestedTime * 0.05);
     $casesForVentilatorsByRequestedTime = intval($infectionsByRequestedTime * 0.02);
     
     $dollarsInFlight = (
