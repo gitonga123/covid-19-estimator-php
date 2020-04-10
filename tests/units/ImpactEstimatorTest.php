@@ -44,8 +44,10 @@ class ImpactEstimatorTest extends TestCase
     {
         $data = [
             'data' => $this->decoded_data['data'],
-            'impact' => calculateImpact($this->decoded_data),
-            'severeImpact' => calculateSevereImpact($this->decoded_data)
+            "estimates" => [
+                'impact' => calculateImpact($this->decoded_data),
+                'severeImpact' => calculateSevereImpact($this->decoded_data)
+            ]
         ];
         $data_json = convertArrayToJson($data);
 
