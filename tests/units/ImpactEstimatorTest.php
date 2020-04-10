@@ -11,7 +11,7 @@ class ImpactEstimatorTest extends TestCase
     public function setUp(): void
     {
         $this->data = '{"data":{"region":{"name":"Africa","avgAge":19.7,"avgDailyIncomeInUSD":3,"avgDailyIncomePopulation":0.71},"periodType":"months","timeToElapse":3,"reportedCases":553,"population":8265701,"totalHospitalBeds":66934},"impact":{"currentlyInfected":5530,"infectionsByRequestedTime":5937792286720},"severeImpact":{"currentlyInfected":27650,"infectionsByRequestedTime":29688961433600}}';
-        $this->decoded_data = json_decode($this->data, true);
+        $this->decoded_data = convertJsonToArray($this->data, true);
     }
     public function testConvertJsonToArray()
     {
@@ -43,15 +43,13 @@ class ImpactEstimatorTest extends TestCase
     public function testCovid19ImpactEstimator()
     {
         $data = [
-            'data' => $this->decoded_data,
-            'estimates' => [
-                'impact' => calculateImpact($this->decoded_data),
-                'severeImpact' => calculateSevereImpact($this->decoded_data)
-            ]
+            'data' => $this->decoded_data['data'],
+            'impact' => calculateImpact($this->decoded_data),
+            'severeImpact' => calculateSevereImpact($this->decoded_data)
         ];
         $data_json = convertArrayToJson($data);
 
-        $result = covid19ImpactEstimator($this->decoded_data);
+        $result = covid19ImpactEstimator($this->data);
 
         $this->assertEquals($data_json, $result);
     }

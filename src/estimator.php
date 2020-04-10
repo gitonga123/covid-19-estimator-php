@@ -2,14 +2,14 @@
 
 function covid19ImpactEstimator($data)
 {
-  $data = convertArrayToJson([
-    'data' => $data,
-    'estimates' => [
-      'impact' => calculateImpact($data),
-      'severeImpact' => calculateSevereImpact($data)
-    ]
+  $formatted_data = convertJsonToArray($data);
+
+  $new_data = convertArrayToJson([
+    "data" => $formatted_data['data'],
+    'impact' => calculateImpact($formatted_data),
+    'severeImpact' => calculateSevereImpact($formatted_data)
   ]);
-  return $data;
+  return $new_data;
 }
 
 function convertJsonToArray($data)
