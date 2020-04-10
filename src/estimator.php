@@ -1,5 +1,6 @@
 
 <?php
+
 function covid19ImpactEstimator($data)
 {
     $new_data = [
@@ -20,16 +21,26 @@ function covid19ImpactEstimator($data)
 function calculateImpact($data, $reportedCasesMultiplier)
 {
     $currentlyInfected = $data['reportedCases'] * $reportedCasesMultiplier;
-    $factor = pow(2, intval(convertPeriodTypeToNumberOfDays($data) / 3));
+    $numberOfDays = convertPeriodTypeToNumberOfDays($data);
+    $factor = pow(2, intval($numberOfDays / 3));
     $infectionsByRequestedTime = $currentlyInfected * $factor;
     $severeCasesByRequestedTime = $infectionsByRequestedTime * 0.15;
     $hospitalBedsByRequestedTime = (intval($data['totalHospitalBeds'] * 0.35)) - $severeCasesByRequestedTime;
+    $casesForICUByRequestedTime = intval($infectionsByRequestedTime * 0.05);
+    $casesForVentilatorsByRequestedTime = intval($infectionsByRequestedTime * 0.02);
+    
+    $dollarsInFlight = (
+      $infectionsByRequestedTime * $data['region']['avgDailyIncomePopulation']
+      ) * $data['region']['avgDailyIncomeInUSD'] * $numberOfDays;
 
     return [
       'currentlyInfected' => $currentlyInfected,
       "infectionsByRequestedTime" => $infectionsByRequestedTime,
       "severeCasesByRequestedTime" => $severeCasesByRequestedTime,
-      "hospitalBedsByRequestedTime" => $hospitalBedsByRequestedTime
+      "hospitalBedsByRequestedTime" => $hospitalBedsByRequestedTime,
+      "casesForICUByRequestedTime" => $casesForICUByRequestedTime,
+      "casesForVentilatorsByRequestedTime" => $casesForVentilatorsByRequestedTime,
+      'dollarsInFlight' => $dollarsInFlight
     ];
 }
 
