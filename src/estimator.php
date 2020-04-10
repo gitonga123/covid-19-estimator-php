@@ -1,10 +1,11 @@
 <?php
-
 function covid19ImpactEstimator($data)
 {
-  $formatted_data = convertJsonToArray($data);
 
-  $new_data = convertArrayToJson([
+  return $data;
+  $formatted_data = json_decode($data, true);
+
+  $new_data = json_encode([
     "data" => $formatted_data,
     'impact' => calculateImpact($formatted_data),
     'severeImpact' => calculateSevereImpact($formatted_data)
