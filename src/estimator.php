@@ -4,15 +4,15 @@
 function covid19ImpactEstimator($data)
 {
     $new_data = [
-      "data" => $data,
-      'impact' => calculateImpact(
-          $data,
-          10
-      ),
-      'severeImpact' => calculateImpact(
-          $data,
-          50
-      )
+        "data" => $data,
+        'impact' => calculateImpact(
+            $data,
+            10
+        ),
+        'severeImpact' => calculateImpact(
+            $data,
+            50
+        )
     ];
     return $new_data;
 }
@@ -28,19 +28,17 @@ function calculateImpact($data, $reportedCasesMultiplier)
     $hospitalBedsByRequestedTime = intval(($data['totalHospitalBeds'] * 0.35) - $severeCasesByRequestedTime);
     $casesForICUByRequestedTime = intval($infectionsByRequestedTime * 0.05);
     $casesForVentilatorsByRequestedTime = intval($infectionsByRequestedTime * 0.02);
-    
-    $dollarsInFlight = intval((
-      $infectionsByRequestedTime * $data['region']['avgDailyIncomePopulation'] * $data['region']['avgDailyIncomeInUSD']
-      ) / $numberOfDays);
+
+    $dollarsInFlight = intval(($infectionsByRequestedTime * $data['region']['avgDailyIncomePopulation'] * $data['region']['avgDailyIncomeInUSD']) / $numberOfDays);
 
     return [
-      'currentlyInfected' => $currentlyInfected,
-      "infectionsByRequestedTime" => $infectionsByRequestedTime,
-      "severeCasesByRequestedTime" => $severeCasesByRequestedTime,
-      "hospitalBedsByRequestedTime" => $hospitalBedsByRequestedTime,
-      "casesForICUByRequestedTime" => $casesForICUByRequestedTime,
-      "casesForVentilatorsByRequestedTime" => $casesForVentilatorsByRequestedTime,
-      'dollarsInFlight' => $dollarsInFlight
+        'currentlyInfected' => $currentlyInfected,
+        "infectionsByRequestedTime" => $infectionsByRequestedTime,
+        "severeCasesByRequestedTime" => $severeCasesByRequestedTime,
+        "hospitalBedsByRequestedTime" => $hospitalBedsByRequestedTime,
+        "casesForICUByRequestedTime" => $casesForICUByRequestedTime,
+        "casesForVentilatorsByRequestedTime" => $casesForVentilatorsByRequestedTime,
+        'dollarsInFlight' => $dollarsInFlight
     ];
 }
 
